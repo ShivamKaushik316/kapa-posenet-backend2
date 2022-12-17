@@ -1,29 +1,27 @@
-let capture;
-let posenet;
-let noseX,noseY;
-let reyeX,reyeY;
-let leyeX,leyeY;
-let singlePose,skeleton;
+let capture; // for video capture
+let posenet;  // variable for pose detection
+
+let singlePose,skeleton; // to detect poses and to make skeleton by joining the points
 
 
-function setup() {
+function setup() {  // initalising the canvas for video capture
     createCanvas(800, 500);
     capture = createCapture(VIDEO)
-    capture.hide();
+    capture.hide();  // in order to hide multiple outputs
 
-    posenet = ml5.poseNet(capture, modelLoaded);
-    posenet.on('pose',receivedPoses);
+    posenet = ml5.poseNet(capture, modelLoaded);  // passing the video capture in posenet
+    posenet.on('pose',receivedPoses);  
 
    
 
 }
 
 function receivedPoses(poses){
-    console.log(poses);
+    console.log(poses); // these are the coordinates
 
     if(poses.length > 0){
-        singlePose = poses[0].pose;
-        skeleton = poses[0].skeleton;
+        singlePose = poses[0].pose;  // to target a single body part pose only
+        skeleton = poses[0].skeleton;  // for skeleton
     }
 }
 
@@ -31,20 +29,20 @@ function modelLoaded() {
     console.log('Model has loaded');
 }
 
-function draw() {
+function draw() { // to make everything visible
 
     // images and videos(webcam)
-    image(capture, 0, 0);
-    fill(255,0,0);
+    image(capture, 0, 0); // passing the video capture in canvas in order to make it visble
+    fill(255,0,0); // colour for points
 
     if(singlePose){
         for(let i=0; i<singlePose.keypoints.length; i++){
-            ellipse(singlePose.keypoints[i].position.x, singlePose.keypoints[i].position.y,20);
+            ellipse(singlePose.keypoints[i].position.x, singlePose.keypoints[i].position.y,20); // making all the points visible in form of ellipse
         }
-        stroke(255,255,255);
-        strokeWeight(5);
+        stroke(255,255,255); // color for lines between the points
+        strokeWeight(5); // thickness for lines
         for(let j=0; j<skeleton.length; j++){
-            line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y)
+            line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y) // creation of lines
         }
 
         
