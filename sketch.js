@@ -37,10 +37,10 @@ function draw() { // to make everything visible
 
     if(singlePose){
         for(let i=0; i<singlePose.keypoints.length; i++){
-            ellipse(singlePose.keypoints[i].position.x, singlePose.keypoints[i].position.y,20); // making all the points visible in form of ellipse
+            ellipse(singlePose.keypoints[i].position.x, singlePose.keypoints[i].position.y,10); // making all the points visible in form of ellipse
         }
         stroke(255,255,255); // color for lines between the points
-        strokeWeight(5); // thickness for lines
+        strokeWeight(2); // thickness for lines
         for(let j=0; j<skeleton.length; j++){
             line(skeleton[j][0].position.x, skeleton[j][0].position.y, skeleton[j][1].position.x, skeleton[j][1].position.y) // creation of lines
         }
